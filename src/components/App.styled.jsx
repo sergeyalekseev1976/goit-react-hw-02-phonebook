@@ -11,3 +11,13 @@ export const Title = styled.h2`
   margin-bottom: 20px;
   font-size: 36px;
 `;
+export const Notification = styled.div`
+  padding: 10px 40px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  box-shadow: 0px 0px 10px 10px rgb(255, 0, 0);
+  border-radius: 10px;
+`;

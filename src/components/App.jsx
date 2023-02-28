@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import { Container, Title } from './App.styled';
+import { Container, Title, Notification } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -17,12 +17,6 @@ export class App extends Component {
   };
 
   addContact = ({ name, number }) => {
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
     if (
       this.state.contacts.find(
         option => option.name.toLowerCase() === name.toLowerCase()
@@ -30,6 +24,12 @@ export class App extends Component {
     ) {
       return alert(`${name} is already in contacts`);
     }
+
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
 
     this.setState(({ contacts }) => ({
       contacts: [contact, ...contacts],
@@ -62,11 +62,20 @@ export class App extends Component {
         <ContactForm addContact={this.addContact} />
 
         <Title>Contacts</Title>
-        <Filter value={this.state.filter} onChangeFilter={this.handleChange} />
-        <ContactList
-          contacts={this.getVisibleContacts()}
-          onDeleteContact={this.deleteContact}
-        />
+        {this.state.contacts.length ? (
+          <div>
+            <Filter
+              value={this.state.filter}
+              onChangeFilter={this.handleChange}
+            />
+            <ContactList
+              contacts={this.getVisibleContacts()}
+              onDeleteContact={this.deleteContact}
+            />
+          </div>
+        ) : (
+          <Notification>No contacts in phonebook</Notification>
+        )}
       </Container>
     );
   }
